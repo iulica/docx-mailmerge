@@ -27,15 +27,14 @@ Open the file.
 
     from mailmerge import MailMerge
     with MailMerge('input.docx',
-            remove_empty_tables=False,
-            auto_update_fields_on_open="no") as document:
+            remove_empty_tables=False) as document:
         ...
 
 
 List all merge fields.
 ::
 
-    print document.get_merge_fields()
+    print(document.get_merge_fields())
 
 
 Merge fields, supplied as kwargs.
