@@ -192,8 +192,8 @@ class MergeField(object):
                 format_prefix,
                 value,
                 format_suffix)
-        chosen_locale  = locale.getlocale()[0]
-        if chosen_locale == "de_DE":
+        numeric_locale  = locale.getlocale(locale.LC_NUMERIC)[0]
+        if numeric_locale == "de_DE":
             thousand_info = [
                                 ('_', thousand_char)
                                 for thousand_char in "."
@@ -223,7 +223,7 @@ class MergeField(object):
                 value,
                 format_suffix)
             if thousand_flag:
-                if chosen_locale == "de_DE":
+                if numeric_locale == "de_DE":
                     result = result.replace(".", ",")
                 result = result.replace(thousand_flag, thousand_char)
             return result
