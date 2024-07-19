@@ -613,8 +613,7 @@ class MergeData(object):
 
     def replace_table_rows(self, body, anchor, rows):
         """replace the rows of a table with the values from the rows list"""
-        table, idx, template = self.__find_row_anchor(body, anchor)
-        if table is not None:
+        for table, idx, template in self.__find_row_anchor(body, anchor):
             if len(rows) > 0:
                 del table[idx]
                 for i, row_data in enumerate(rows):
@@ -632,8 +631,7 @@ class MergeData(object):
         for table in body.findall(".//{%(w)s}tbl" % NAMESPACES):
             for idx, row in enumerate(table):
                 if row.find('.//MergeField[@name="%s"]' % field) is not None:
-                    return table, idx, row
-        return None, None, None
+                    yield table, idx, row
 
     def get_field_object(self, field_element, row):
         """ " fills the corresponding MergeField python object with data from row"""

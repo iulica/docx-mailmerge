@@ -6,7 +6,6 @@ from mailmerge import NAMESPACES, MailMerge
 from tests.utils import EtreeMixin, get_document_body_part
 
 
-@unittest.expectedFailure
 class MergeMultipleTableRowsTest(EtreeMixin, unittest.TestCase):
     def setUp(self):
         self.document = MailMerge(
