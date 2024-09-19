@@ -503,7 +503,7 @@ class MergeData(object):
         # For elements with no instr, otherwise this will throw an exception
         if len(s) > 0:
             return s[0], s[1:]
-        return s[0], s[1:]
+        return "", []
 
     def make_data_field(
         self,
