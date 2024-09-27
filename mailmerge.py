@@ -711,7 +711,7 @@ class MergeHeaderFooterDocument(object):
         filename = os.path.basename(filename)
         match = PARTFILENAME_RE.match(filename)
         assert match
-        return filename, *match.groups()
+        return (filename, *match.groups())
 
     def _prepare_data(self, separator):
         if separator not in VALID_SEPARATORS:
