@@ -176,9 +176,28 @@ later.
                 keep_fields=OptionKeepFields.ALL)) as document:
         ...
 
+How populate Word Templates
+===========================
 
-See also the unit tests and this nice write-up `Populating MS Word Templates
-with Python`_ on Practical Business Python for more information and examples.
+There are two main sources of examples for template populating
+- the unit tests of this project
+- the nice write-up `Populating MS Word Templates with Python`_ on Practical Business Python for more information and examples
+
+Generally, you have to create ``field code brackets`` in which expressions such as ``MERGEFIELD``, ``IF`` and so on are inserted.
+Field code brackets looks like as curly brackets, but they are not ordinary curly brackets and must be created by special
+key shortcut or inserted as ``field``.
+If you write curly brackets as oridnary text, they have not any special meaning.
+
+
+macOS
+-----
+``Field code brackets`` or just ``field code`` is create with:
+- key shortcut ``CMD-F9`` or,
+- by clicking buttons ``Insert -> Field... -> <FieldType>`` in MS word GUI
+
+When you create ``field code`` by key-shortcut ``CMD-F9``, then select the
+``field code`` and update it by pressing ``F9``.
+Updating may result in hiding the raw field code. If you want to see the raw code again, you can toggle the display of field codes on and off using the ``OPTION-F9`` shortcut.
 
 Inserting Dynamic Images
 ========================
