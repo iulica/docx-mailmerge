@@ -176,7 +176,7 @@ later.
                 keep_fields=OptionKeepFields.ALL)) as document:
         ...
 
-How populate Word Templates
+How to  populate Word Templates
 ===========================
 
 There are two main sources of examples for template populating:
