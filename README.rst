@@ -186,9 +186,9 @@ There are two main sources of examples for template populating:
 
 Generally, you have to create ``field code brackets`` in which expressions such as ``MERGEFIELD``, ``IF`` and so on are inserted.
 Field code brackets looks like as curly brackets, but they are not ordinary curly brackets and must be created by special
-key shortcut or inserted as ``field``. Example of field code ``{ MERGEFIELD reason }``
-If you write curly brackets as oridnary text, they have not any special meaning.
+key shortcut or inserted as ``field``. If you write curly brackets as oridnary text, they have not any special meaning.
 
+Example of field code ``{ MERGEFIELD reason }``.
 
 macOS
 -----
