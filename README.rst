@@ -195,7 +195,7 @@ macOS
 ``Field code brackets`` or just ``field code`` is create with:
 
 * key shortcut ``CMD-F9`` or,
-* by clicking buttons ``Insert -> Field... -> <FieldType>`` in MS word GUI
+* by clicking buttons ``Insert -> Field... -> <FieldName>`` in MS word GUI
 
 When you create ``field code`` by key-shortcut ``CMD-F9``, then select the
 ``field code`` and update it by pressing ``F9``.
