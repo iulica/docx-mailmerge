@@ -179,9 +179,10 @@ later.
 How populate Word Templates
 ===========================
 
-There are two main sources of examples for template populating
-- the unit tests of this project
-- the nice write-up `Populating MS Word Templates with Python`_ on Practical Business Python for more information and examples
+There are two main sources of examples for template populating:
+
+* the unit tests of this project
+* the nice write-up `Populating MS Word Templates with Python`_ on Practical Business Python for more information and examples
 
 Generally, you have to create ``field code brackets`` in which expressions such as ``MERGEFIELD``, ``IF`` and so on are inserted.
 Field code brackets looks like as curly brackets, but they are not ordinary curly brackets and must be created by special
@@ -192,8 +193,9 @@ If you write curly brackets as oridnary text, they have not any special meaning.
 macOS
 -----
 ``Field code brackets`` or just ``field code`` is create with:
-- key shortcut ``CMD-F9`` or,
-- by clicking buttons ``Insert -> Field... -> <FieldType>`` in MS word GUI
+
+* key shortcut ``CMD-F9`` or,
+* by clicking buttons ``Insert -> Field... -> <FieldType>`` in MS word GUI
 
 When you create ``field code`` by key-shortcut ``CMD-F9``, then select the
 ``field code`` and update it by pressing ``F9``.
