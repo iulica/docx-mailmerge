@@ -176,8 +176,8 @@ later.
                 keep_fields=OptionKeepFields.ALL)) as document:
         ...
 
-How to  populate Word Templates
-===========================
+How to populate Word Templates
+==============================
 
 There are two main sources of examples for template populating:
 
@@ -190,16 +190,16 @@ key shortcut or inserted as ``field``. If you write curly brackets as oridnary t
 
 Example of field code ``{ MERGEFIELD reason }``.
 
-macOS
------
-``Field code brackets`` or just ``field code`` is create with:
+How to insert field code
+------------------------
+``Field code brackets`` or just ``field code`` can be inserted in the following ways:
 
-* key shortcut ``CMD-F9`` or,
-* by clicking buttons ``Insert -> Field... -> <FieldName>`` in MS word GUI
+* by using keyboard shortcut ``CTRL-F9`` (``CMD-F9`` on macOS) or,
+* by clicking ``Insert -> Field... -> <FieldName>`` in MS Word GUI
 
-When you create ``field code`` by key-shortcut ``CMD-F9``, then select the
+When you create ``field code`` by key-shortcut ``CTRL-F9``, then select the
 ``field code`` and update it by pressing ``F9``.
-Updating may result in hiding the raw field code. If you want to see the raw code again, you can toggle the display of field codes on and off using the ``OPTION-F9`` shortcut.
+Updating may result in hiding the raw field code. If you want to see the raw code again, you can toggle the display of field codes on and off using the ``ALT-F9`` (``OPTION-F9`` on macOS) shortcut.
 
 Inserting Dynamic Images
 ========================
