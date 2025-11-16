@@ -197,7 +197,7 @@ How to insert field code
 * by using keyboard shortcut ``CTRL-F9`` (``CMD-F9`` on macOS) or,
 * by clicking ``Insert -> Field... -> <FieldName>`` in MS Word GUI
 
-When you create ``field code`` by key-shortcut ``CTRL-F9``, then select the
+When you create ``field code`` by keyboard shortcut ``CTRL-F9``, then select the
 ``field code`` and update it by pressing ``F9``.
 Updating may result in hiding the raw field code. If you want to see the raw code again, you can toggle the display of field codes on and off using the ``ALT-F9`` (``OPTION-F9`` on macOS) shortcut.
 
