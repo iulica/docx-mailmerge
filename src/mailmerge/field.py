@@ -132,7 +132,6 @@ class BaseMergeField(object):
                 date_formats.append("%x")
             if hasattr(value, "hour"):
                 date_formats.append("%X")
-            print(date_formats)
             value = value.strftime(" ".join(date_formats))
 
         return value
