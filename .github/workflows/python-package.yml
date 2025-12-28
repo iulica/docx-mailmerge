@@ -29,6 +29,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - if: runner.os == 'Linux'
+      name: Install Apt Packages
+      run: sudo apt-get install -qq language-pack-de
     - name: Install the code linting and formatting tool Ruff
       run: pipx install ruff
     - name: Lint code with Ruff
@@ -68,6 +71,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - if: runner.os == 'Linux'
+      name: Install Apt Packages
+      run: sudo apt-get install -qq language-pack-de
     - name: Install the code linting and formatting tool Ruff
       run: pipx install ruff
     - name: Lint code with Ruff
