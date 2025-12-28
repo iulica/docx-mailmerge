@@ -10,13 +10,13 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  build37:
+  
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.x"]
+        python-version: ["3.7"]
 
     steps:
     - uses: actions/checkout@v4
@@ -42,6 +42,47 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with unittest
+    - name: Install tox and any other packages
+      run: pip install tox
+    - name: Run tox
+      # Run tox using the version of Python in `PATH`
+      run: tox -e py
+    
+    
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.x"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
       run: |
-        python -m unittest discover
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install the code linting and formatting tool Ruff
+      run: pipx install ruff
+    - name: Lint code with Ruff
+      run: ruff check --output-format=github --target-version=py39
+    - name: Check code formatting with Ruff
+      run: ruff format --diff --target-version=py39
+      continue-on-error: true
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Install tox and any other packages
+      run: pip install tox
+    - name: Run tox
+      # Run tox using the version of Python in `PATH`
+      run: tox -e py
