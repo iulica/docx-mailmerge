@@ -134,7 +134,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
             "\\@",
             {
                 "MMM": [(datetime_value, "Mär")],
-                "am/pm": [(datetime_value, "pm")],
+                "am/pm": [(datetime_value, datetime_value.strftime("%p"))],
             },
         )
 
