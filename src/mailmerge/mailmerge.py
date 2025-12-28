@@ -1,5 +1,6 @@
 import os
 import warnings
+from typing import Optional
 
 # import locale
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -110,7 +111,7 @@ class MailMerge:
     def __init__(
         self,
         file,
-        options: MailMergeOptions | None = None,
+        options: Optional[MailMergeOptions] = None,
         remove_empty_tables=None,
         auto_update_fields_on_open=None,
         keep_fields=None,

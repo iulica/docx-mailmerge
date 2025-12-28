@@ -65,7 +65,7 @@ class IfTest(EtreeMixin, unittest.TestCase):
             "test_if_with_paragraph.docx",
             [{}] + [{"fieldname": value} for value in values] + [{}],
             mm_kwargs=dict(merge_if_fields=True, keep_fields=OptionKeepFields.SOME),
-            output="tests/output/test_output_if_with_paragraph_keep_some.docx",
+            # output="tests/output/test_output_if_with_paragraph_keep_some.docx",
         )
 
         self.assertListEqual(root_elem.xpath(MERGE_FIELDS_XPATH, namespaces=NAMESPACES), [])
@@ -87,7 +87,7 @@ class IfTest(EtreeMixin, unittest.TestCase):
             "test_if_with_paragraph.docx",
             [{}] + [{"fieldname": value} for value in values] + [{}],
             mm_kwargs=dict(merge_if_fields=True, keep_fields=OptionKeepFields.ALL),
-            output="tests/output/test_output_if_with_paragraph_keep_all.docx",
+            # output="tests/output/test_output_if_with_paragraph_keep_all.docx",
         )
 
         self.assertListEqual(root_elem.xpath(MERGE_FIELDS_XPATH, namespaces=NAMESPACES), [])

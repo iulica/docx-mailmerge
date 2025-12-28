@@ -1,7 +1,6 @@
 import unittest
 
 from mailmerge import NAMESPACES
-
 from tests.utils import EtreeMixin
 
 
@@ -35,7 +34,7 @@ class BeforeAfterWithParTest(EtreeMixin, unittest.TestCase):
                 for value in values
             ],
             separator="nextPage_section",
-            output="tests/output/test_output_field_with_paragraph_and_nested_field.docx",
+            # output="tests/output/test_output_field_with_paragraph_and_nested_field.docx",
         )
 
         fields = root_elem.xpath("//w:t/text()", namespaces=NAMESPACES)

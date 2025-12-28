@@ -97,7 +97,7 @@ class MergeParamsTest(EtreeMixin, unittest.TestCase):
             TEST_DOCX,
             [VALUES, VALUES],
             mm_kwargs={"keep_fields": keep_fields},
-            output=TEST_DOCX_OUT % keep_fields,
+            # output=TEST_DOCX_OUT % keep_fields,
         )
 
         self.assertListEqual(
@@ -123,7 +123,7 @@ class MergeParamsTest(EtreeMixin, unittest.TestCase):
             TEST_DOCX,
             [VALUES, VALUES],
             mm_kwargs={"keep_fields": keep_fields},
-            output=TEST_DOCX_OUT % keep_fields,
+            # output=TEST_DOCX_OUT % keep_fields,
         )
 
         self.assertListEqual(
