@@ -6,7 +6,6 @@ import warnings
 from os import path
 
 from mailmerge import NAMESPACES, MailMerge
-
 from tests.utils import EtreeMixin, get_document_body_part
 
 
@@ -62,7 +61,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
         date_value = datetime_value.date()
         time_value = datetime_value.time()
         # time12_value = datetime_value - datetime.timedelta(hours=12)
-        locale.setlocale(locale.LC_TIME, "en_US")
+        locale.setlocale(locale.LC_TIME, "en_US.UTF-8")
 
         # https://support.microsoft.com/en-us/office/format-field-results-baa61f5a-5636-4f11-ab4f-6c36ae43508c#ID0EBBD=Date-Time_format_switch_(\@)
 
@@ -130,7 +129,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
         self._test_formats("", {"": [(date_value, "03/09/2022")]})
         self._test_formats("", {"": [(time_value, "17:07:08")]})
 
-        locale.setlocale(locale.LC_TIME, "de_DE")
+        locale.setlocale(locale.LC_TIME, "de_DE.UTF-8")
         self._test_formats(
             "\\@",
             {
