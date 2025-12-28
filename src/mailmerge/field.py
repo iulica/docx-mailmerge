@@ -112,6 +112,32 @@ class BaseMergeField(object):
 
     def _format(self, value):
         options = self.current_instr_tokens[2:]
+        for flag, option in self._walk_options(options):
+            if flag in ("\\b", "\\f"):
+                value = self._format_bf(value, flag, option)
+            if flag in ("\\#"):
+                value = self._format_number(value, flag, option)
+            if flag in ("\\@"):
+                value = self._format_date(value, flag, option)
+            if flag in ("\\*"):
+                value = self._format_text(value, flag, option)
+
+        return self._format_value(value)
+
+    def _format_value(self, value):
+        if isinstance(value, (datetime.datetime, datetime.date, datetime.time)):
+            # TODO format the date according to the locale -- set the locale
+            date_formats = []
+            if hasattr(value, "month"):
+                date_formats.append("%x")
+            if hasattr(value, "hour"):
+                date_formats.append("%X")
+            print(date_formats)
+            value = value.strftime(" ".join(date_formats))
+
+        return value
+
+    def _walk_options(self, options):
         while options:
             flag = options[0][0:2]
             if not flag:
@@ -123,25 +149,7 @@ class BaseMergeField(object):
             else:
                 option = options[1]
                 options = options[2:]
-            if flag in ("\\b", "\\f"):
-                value = self._format_bf(value, flag, option)
-            if flag in ("\\#"):
-                value = self._format_number(value, flag, option)
-            if flag in ("\\@"):
-                value = self._format_date(value, flag, option)
-            if flag in ("\\*"):
-                value = self._format_text(value, flag, option)
-
-        if isinstance(value, (datetime.datetime, datetime.date, datetime.time)):
-            # TODO format the date according to the locale -- set the locale
-            date_formats = []
-            if hasattr(value, "month"):
-                date_formats.append("%x")
-            if hasattr(value, "hour"):
-                date_formats.append("%X")
-            value = value.strftime(" ".join(date_formats))
-
-        return value
+            yield flag, option
 
     def _format_bf(self, value, flag, option):
         # print("<{}><{}>".format(value, type(value)))

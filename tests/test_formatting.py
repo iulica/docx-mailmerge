@@ -125,7 +125,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
                 },
             )
 
-        self._test_formats("", {"": [(datetime_value, "03/09/2022 17:07:08")]})
+        self._test_formats("", {"": [(datetime_value, datetime_value.strftime("%x %X"))]})
         self._test_formats("", {"": [(date_value, "03/09/2022")]})
         self._test_formats("", {"": [(time_value, "17:07:08")]})
 
