@@ -25,6 +25,8 @@ class Part:
     def __fill_simple_fields(self):
         for fld_simple_elem in self.part.findall(".//{%(w)s}fldSimple" % NAMESPACES):
             first_run_elem = deepcopy(fld_simple_elem.find("{%(w)s}r" % NAMESPACES))
+            if first_run_elem is None:
+                continue
             if MAKE_TESTS_HAPPY:
                 first_run_elem.clear()
             merge_field_obj = self.merge_data.make_data_field(
