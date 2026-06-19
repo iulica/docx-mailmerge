@@ -32,14 +32,14 @@ class MailMergeDocx:
         self.category_part_map["content_types"] = [content_types_zi]
         self.parts[content_types_zi] = dict(part=content_types)
         for file in content_types.findall("{%(ct)s}Override" % NAMESPACES):
-            part_type = file.attrib["ContentType" % NAMESPACES]
+            part_type = file.attrib["ContentType"]
             category = CONTENT_TYPES_PARTS.get(part_type)
             if category:
                 zi, self.parts[zi] = self.__get_tree_of_file(file)
                 self.category_part_map.setdefault(category, []).append(zi)
 
     def __get_tree_of_file(self, file):
-        fn = file.attrib["PartName" % NAMESPACES].split("/", 1)[1]
+        fn = file.attrib["PartName"].split("/", 1)[1]
         zi = self.zip.getinfo(fn)
         return zi, dict(zi=zi, file=file, part=etree.parse(self.zip.open(zi), parser=None))
 

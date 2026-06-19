@@ -97,9 +97,9 @@ class EtreeMixin(object):
 
         content_types = etree.parse(self.docx_zipfile.open("[Content_Types].xml"), parser=None)
         for file_elem in content_types.findall("{%(ct)s}Override" % NAMESPACES):
-            part_type = file_elem.attrib["ContentType" % NAMESPACES]
+            part_type = file_elem.attrib["ContentType"]
             if part_type in CONTENT_TYPES_PARTS:
-                fn = file_elem.attrib["PartName" % NAMESPACES].split("/", 1)[1]
+                fn = file_elem.attrib["PartName"].split("/", 1)[1]
                 zi = self.docx_zipfile.getinfo(fn)
                 self.docx_parts[zi] = etree.parse(self.docx_zipfile.open(zi), parser=None)
 
