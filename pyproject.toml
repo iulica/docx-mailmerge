@@ -27,7 +27,7 @@ dependencies = [
 description = "Performs a Mail Merge on docx (Microsoft Office Word) files"
 dynamic = ["version"]
 keywords = ["docx", "office", "openxml", "word"]
-license = { text = "MIT" }
+license = "MIT"
 readme = "README.rst"
 requires-python = ">=3.7"
 
