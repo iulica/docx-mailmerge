@@ -7,7 +7,7 @@ from tests.utils import EtreeMixin
 class BeforeAfterWithParTest(EtreeMixin, unittest.TestCase):
     def test_paragraph(self):
         values = ["one", "two", "three"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_field_with_paragraph.docx",
             [
                 {
@@ -25,7 +25,7 @@ class BeforeAfterWithParTest(EtreeMixin, unittest.TestCase):
 
     def test_paragraph_and_nested_field(self):
         values = ["one", "two", "three"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_field_with_paragraph_and_nested_field.docx",
             [
                 {

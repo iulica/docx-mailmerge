@@ -21,10 +21,10 @@ class IfTest(EtreeMixin, unittest.TestCase):
         Tests the IF record with paragraphs
         """
         values = ["one", "two", "three", "four", "five"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_if_with_paragraph.docx",
             [{"fieldname": value} for value in values],
-            mm_kwargs=dict(merge_if_fields=True),
+            mm_kwargs={"merge_if_fields": True},
             # output="tests/test_output_next_record.docx"
         )
 
@@ -40,10 +40,10 @@ class IfTest(EtreeMixin, unittest.TestCase):
         Tests the IF record with paragraphs
         """
         values = ["one", "two", "three", "four", "five"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_if_with_paragraph.docx",
             [{}] + [{"fieldname": value} for value in values] + [{}],
-            mm_kwargs=dict(merge_if_fields=True),
+            mm_kwargs={"merge_if_fields": True},
             # output="tests/test_output_next_record.docx"
         )
 
@@ -61,10 +61,10 @@ class IfTest(EtreeMixin, unittest.TestCase):
         Tests the IF record with paragraphs
         """
         values = ["one", "two"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_if_with_paragraph.docx",
             [{}] + [{"fieldname": value} for value in values] + [{}],
-            mm_kwargs=dict(merge_if_fields=True, keep_fields=OptionKeepFields.SOME),
+            mm_kwargs={"merge_if_fields": True, "keep_fields": OptionKeepFields.SOME},
             # output="tests/output/test_output_if_with_paragraph_keep_some.docx",
         )
 
@@ -83,10 +83,10 @@ class IfTest(EtreeMixin, unittest.TestCase):
         Tests the IF record with paragraphs
         """
         values = ["one", "two"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_if_with_paragraph.docx",
             [{}] + [{"fieldname": value} for value in values] + [{}],
-            mm_kwargs=dict(merge_if_fields=True, keep_fields=OptionKeepFields.ALL),
+            mm_kwargs={"merge_if_fields": True, "keep_fields": OptionKeepFields.ALL},
             # output="tests/output/test_output_if_with_paragraph_keep_all.docx",
         )
 

@@ -85,7 +85,7 @@ class MergeTableRowsTest(EtreeMixin, unittest.TestCase):
 
         with tempfile.TemporaryFile() as outfile:
             self.document.write(outfile)
-        self.assertIsNone(get_document_body_part(self.document).getroot().find(".//{%(w)s}tbl" % NAMESPACES))
+        self.assertIsNone(get_document_body_part(self.document).getroot().find(".//{{{w}}}tbl".format(**NAMESPACES)))
 
     def test_merge_unified(self):
         self.document.merge(

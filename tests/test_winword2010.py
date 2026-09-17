@@ -13,8 +13,7 @@ class Windword2010Test(EtreeMixin, unittest.TestCase):
         with MailMerge(path.join(path.dirname(__file__), "test_winword2010.docx")) as document:
             self.assertEqual(
                 document.get_merge_fields(),
-                set(
-                    [
+                {
                         "Titel",
                         "Voornaam",
                         "Achternaam",
@@ -23,8 +22,7 @@ class Windword2010Test(EtreeMixin, unittest.TestCase):
                         "Plaats",
                         "Provincie",
                         "Land_of_regio",
-                    ]
-                ),
+                    },
             )
 
             document.merge(
@@ -197,4 +195,4 @@ class Windword2010Test(EtreeMixin, unittest.TestCase):
         )
 
         self.assert_equal_tree(expected_tree, get_document_body_part(document).getroot())
-        self.assertIsNone(document.get_settings().getroot().find("{%(w)s}mailMerge" % NAMESPACES))
+        self.assertIsNone(document.get_settings().getroot().find("{{{w}}}mailMerge".format(**NAMESPACES)))

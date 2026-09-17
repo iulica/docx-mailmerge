@@ -14,7 +14,7 @@ class NextRecordsTest(EtreeMixin, unittest.TestCase):
         Tests if the next record field works
         """
         values = ["one", "two", "three", "four", "five"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_next_record.docx",
             [{"field": value} for value in values],
             # output="tests/test_output_next_record.docx"
@@ -30,7 +30,7 @@ class NextRecordsTest(EtreeMixin, unittest.TestCase):
         Tests if the next record field works
         """
         values = ["one", "two", "three", "four", "five"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_nextif.docx",
             [{"fieldname": value} for value in values],
             # output="tests/test_output_next_record.docx"
@@ -46,7 +46,7 @@ class NextRecordsTest(EtreeMixin, unittest.TestCase):
         Tests if the next record field works
         """
         values = ["one", "two", "three", "four", "five"]
-        document, root_elem = self.merge_templates(
+        _document, root_elem = self.merge_templates(
             "test_skipif.docx",
             [{"fieldname": value} for value in values],
             # output="tests/test_output_next_record.docx"

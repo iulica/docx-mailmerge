@@ -13,8 +13,7 @@ class MacWord2011Test(EtreeMixin, unittest.TestCase):
         with MailMerge(path.join(path.dirname(__file__), "test_macword2011.docx")) as document:
             self.assertEqual(
                 document.get_merge_fields(),
-                set(
-                    [
+                {
                         "first_name",
                         "last_name",
                         "country",
@@ -23,8 +22,7 @@ class MacWord2011Test(EtreeMixin, unittest.TestCase):
                         "date",
                         "address_line",
                         "city",
-                    ]
-                ),
+                    },
             )
 
             document.merge(

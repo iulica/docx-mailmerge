@@ -15,7 +15,7 @@ ATTACHMENT_TAGS = [
     "endnotes",  # endnotes
 ]
 
-ATTACHMENT_TAGS_WITH_NAMESPACE = {"{%(w)s}" % NAMESPACES + tag for tag in ATTACHMENT_TAGS}
+ATTACHMENT_TAGS_WITH_NAMESPACE = {"{{{w}}}".format(**NAMESPACES) + tag for tag in ATTACHMENT_TAGS}
 
 CONTENT_TYPES_PARTS = {
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml": "main",

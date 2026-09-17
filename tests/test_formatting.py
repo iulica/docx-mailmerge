@@ -14,7 +14,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
         self.open_docx(path.join(path.dirname(__file__), "test_one_simple_field.docx"))
         zi, part = self.get_part()
         self.replacement_parts = {zi: part}
-        self.simple_merge_field = part.getroot().find(".//{%(w)s}fldSimple" % NAMESPACES)
+        self.simple_merge_field = part.getroot().find(".//{{{w}}}fldSimple".format(**NAMESPACES))
 
     def _test_formats(self, flag, format_tests):
         for formatting, value_list in format_tests.items():
@@ -22,7 +22,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
             # print(formatting)
 
             instr = f'MERGEFIELD fieldname {flag} "{formatting}"'
-            self.simple_merge_field.set("{%(w)s}instr" % NAMESPACES, instr)
+            self.simple_merge_field.set("{{{w}}}instr".format(**NAMESPACES), instr)
             with MailMerge(self.get_new_docx(self.replacement_parts)) as document:
                 self.assertEqual(document.get_merge_fields(), {"fieldname"})
                 document.merge_templates(rows, "page_break")

@@ -22,7 +22,7 @@ class RelationsDocument:
 
     def get_relation_elem(self, target):
         """returns the relation element for the"""
-        return self.rel_part.getroot().find('rr:Relationship[@Target="%s"]' % target, namespaces=NAMESPACES)
+        return self.rel_part.getroot().find(f'rr:Relationship[@Target="{target}"]', namespaces=NAMESPACES)
 
     def get_all(self):
         """returns all relations"""

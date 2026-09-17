@@ -11,7 +11,7 @@ from tests.utils import EtreeMixin, get_document_body_part
 class MultipleElementsTest(EtreeMixin, unittest.TestCase):
     def test(self):
         with MailMerge(path.join(path.dirname(__file__), "test_multiple_elements.docx")) as document:
-            self.assertEqual(document.get_merge_fields(), set(["foo", "bar", "gak"]))
+            self.assertEqual(document.get_merge_fields(), {"foo", "bar", "gak"})
 
             document.merge(foo="one", bar="two", gak="three")
 

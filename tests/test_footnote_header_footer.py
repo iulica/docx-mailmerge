@@ -14,7 +14,7 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
         values = ["one", "two", "three"]
         # header/footer/footnotes don't work with multiple replacements, only with merge
         # fix this when it is implemented
-        document, root_elem = self.merge_templates(
+        document, _root_elem = self.merge_templates(
             "test_footnote_header_footer.docx",
             [
                 {
@@ -45,9 +45,9 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
                     footer
                     for value in values
                     for footer in [
-                        "Footer on even page fe_%s" % value,
-                        "Footer on every page f_%s" % value,
-                        "Footer on first page ff_%s" % value,
+                        f"Footer on even page fe_{value}",
+                        f"Footer on every page f_{value}",
+                        f"Footer on first page ff_{value}",
                     ]
                 ]
                 + ["Footer on even page ", "Footer on every page ", "Footer on first page "]
@@ -67,9 +67,9 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
                     header
                     for value in values
                     for header in [
-                        "Header even: he_%s" % value,
-                        "Header on every page: h_%s" % value,
-                        "Header on first page: hf_%s" % value,
+                        f"Header even: he_{value}",
+                        f"Header on every page: h_{value}",
+                        f"Header on first page: hf_{value}",
                     ]
                 ]
                 + ["Header even: ", "Header on every page: ", "Header on first page: "]
@@ -81,7 +81,7 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
         values = ["one", "two", "three"]
         # header/footer/footnotes don't work with multiple replacements, only with merge
         # fix this when it is implemented
-        document, root_elem = self.merge_templates(
+        document, _root_elem = self.merge_templates(
             "test_footnote_header_footer.docx",
             [
                 {
@@ -106,9 +106,9 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
 
     def test_only_merge(self):
         values = ["one", "two", "three"]
-        document, root_elem = self.merge(
+        document, _root_elem = self.merge(
             "test_footnote_header_footer.docx",
-            [
+            next(
                 {
                     "fieldname": value,
                     "footerfield": "f_" + value,
@@ -119,7 +119,7 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
                     "headereven": "he_" + value,
                 }
                 for value in values
-            ][0],
+            ),
             # output="tests/output/test_output_one_footnote_header_footer.docx"
         )
 
@@ -137,9 +137,9 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
         self.assertListEqual(
             footers,
             [
-                "Footer on even page fe_%s" % value,
-                "Footer on every page f_%s" % value,
-                "Footer on first page ff_%s" % value,
+                f"Footer on even page fe_{value}",
+                f"Footer on every page f_{value}",
+                f"Footer on first page ff_{value}",
             ],
         )
 
@@ -152,9 +152,9 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
         self.assertListEqual(
             headers,
             [
-                "Header even: he_%s" % value,
-                "Header on every page: h_%s" % value,
-                "Header on first page: hf_%s" % value,
+                f"Header even: he_{value}",
+                f"Header on every page: h_{value}",
+                f"Header on first page: hf_{value}",
             ],
         )
 
@@ -162,7 +162,7 @@ class FootnoteHeaderFooterTest(EtreeMixin, unittest.TestCase):
         values = ["one", "two"]
         # header/footer/footnotes don't work with multiple replacements, only with merge
         # fix this when it is implemented
-        document, root_elem = self.merge_templates(
+        _document, _root_elem = self.merge_templates(
             "test_footer.docx",
             [
                 {

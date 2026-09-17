@@ -54,12 +54,20 @@ class EtreeMixin:
         replacements,
         separator="page_break",
         write_file=True,
-        mm_args=[],
-        mm_kwargs={},
-        mt_args=[],
-        mt_kwargs={},
+        mm_args=None,
+        mm_kwargs=None,
+        mt_args=None,
+        mt_kwargs=None,
         output=None,
     ):
+        if mt_kwargs is None:
+            mt_kwargs = {}
+        if mt_args is None:
+            mt_args = []
+        if mm_kwargs is None:
+            mm_kwargs = {}
+        if mm_args is None:
+            mm_args = []
         with MailMerge(
             path.join(path.dirname(__file__), filename), *mm_args, options=MailMergeOptions(**mm_kwargs)
         ) as document:
@@ -75,7 +83,11 @@ class EtreeMixin:
 
             return document, get_document_body_part(document).getroot()
 
-    def merge(self, filename, replacements, write_file=True, mm_args=[], mm_kwargs={}, output=None):
+    def merge(self, filename, replacements, write_file=True, mm_args=None, mm_kwargs=None, output=None):
+        if mm_kwargs is None:
+            mm_kwargs = {}
+        if mm_args is None:
+            mm_args = []
         with MailMerge(
             path.join(path.dirname(__file__), filename), *mm_args, options=MailMergeOptions(**mm_kwargs)
         ) as document:
@@ -96,7 +108,7 @@ class EtreeMixin:
         self.docx_parts = {}
 
         content_types = etree.parse(self.docx_zipfile.open("[Content_Types].xml"), parser=None)
-        for file_elem in content_types.findall("{%(ct)s}Override" % NAMESPACES):
+        for file_elem in content_types.findall("{{{ct}}}Override".format(**NAMESPACES)):
             part_type = file_elem.attrib["ContentType"]
             if part_type in CONTENT_TYPES_PARTS:
                 fn = file_elem.attrib["PartName"].split("/", 1)[1]
@@ -123,7 +135,7 @@ class EtreeMixin:
 
 def get_document_body_part(document, endswith="document"):
     for part in document.docx.parts.values():
-        if part["part"].getroot().tag.endswith("}%s" % endswith):
+        if part["part"].getroot().tag.endswith(f"}}{endswith}"):
             return part["part"]
 
     raise AssertionError("main document body not found in document.parts")
@@ -132,10 +144,10 @@ def get_document_body_part(document, endswith="document"):
 def get_document_body_parts(document, endswith="document"):
     parts = []
     for part in document.docx.parts.values():
-        if part["part"].getroot().tag.endswith("}%s" % endswith):
+        if part["part"].getroot().tag.endswith(f"}}{endswith}"):
             parts.append(part["part"])
     for new_part in document.new_parts:
-        if new_part.content.getroot().tag.endswith("}%s" % endswith):
+        if new_part.content.getroot().tag.endswith(f"}}{endswith}"):
             parts.append(new_part.content)
 
     return parts

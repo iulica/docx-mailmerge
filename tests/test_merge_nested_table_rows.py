@@ -36,7 +36,7 @@ class MergeNestedTableRowsTest(EtreeMixin, unittest.TestCase):
                 self.document.write(outfile)
 
         root_elem = get_document_body_part(self.document).getroot()
-        self.assertEqual(len(root_elem.findall(".//{%(w)s}tbl" % NAMESPACES)), 2)
+        self.assertEqual(len(root_elem.findall(".//{{{w}}}tbl".format(**NAMESPACES))), 2)
 
     def test_merge_rows_replace_mode_false(self):
         self.document.options.table_rows_replace_mode = False
@@ -56,8 +56,8 @@ class MergeNestedTableRowsTest(EtreeMixin, unittest.TestCase):
                 self.document.write(outfile)
 
         root_elem = get_document_body_part(self.document).getroot()
-        self.assertEqual(len(root_elem.findall(".//{%(w)s}tbl" % NAMESPACES)), 2)
-        second_table_rows = root_elem.findall(".//{%(w)s}tbl//{%(w)s}tbl//{%(w)s}tr" % NAMESPACES)
+        self.assertEqual(len(root_elem.findall(".//{{{w}}}tbl".format(**NAMESPACES))), 2)
+        second_table_rows = root_elem.findall(".//{{{w}}}tbl//{{{w}}}tbl//{{{w}}}tr".format(**NAMESPACES))
         self.assertEqual(len(second_table_rows), 3)
 
     def test_merge_rows_replace_mode_true(self):
@@ -78,8 +78,8 @@ class MergeNestedTableRowsTest(EtreeMixin, unittest.TestCase):
                 self.document.write(outfile)
 
         root_elem = get_document_body_part(self.document).getroot()
-        self.assertEqual(len(root_elem.findall(".//{%(w)s}tbl" % NAMESPACES)), 2)
-        second_table_rows = root_elem.findall(".//{%(w)s}tbl//{%(w)s}tbl//{%(w)s}tr" % NAMESPACES)
+        self.assertEqual(len(root_elem.findall(".//{{{w}}}tbl".format(**NAMESPACES))), 2)
+        second_table_rows = root_elem.findall(".//{{{w}}}tbl//{{{w}}}tbl//{{{w}}}tr".format(**NAMESPACES))
         self.assertEqual(len(second_table_rows), 2)
 
     def test_merge_rows_replace_mode_overflow(self):
