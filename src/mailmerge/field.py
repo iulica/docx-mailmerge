@@ -206,7 +206,7 @@ class BaseMergeField:
             if thousand_flag:
                 result = result.replace(thousand_flag, thousand_char)
             return result
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise ValueError(f"Invalid number format <{number_format_text}> with error <{e}>")
 
     def _format_date(self, value, flag, option):

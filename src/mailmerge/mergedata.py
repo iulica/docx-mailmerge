@@ -12,9 +12,9 @@ from .unique_man import UniqueIdsManager
 class MergeData:
     """prepare the MergeField objects and the data"""
 
-    SUPPORTED_FIELDS = {"MERGEFIELD", "NEXT", "NEXTIF", "SKIPIF"}
-    IF_FIELDS = {"IF"}
-    FIELD_CLASSES = {"NEXT": NextField, "IF": IfField, "NEXTIF": NextIfField, "SKIPIF": SkipIfField}
+    SUPPORTED_FIELDS = {"MERGEFIELD", "NEXT", "NEXTIF", "SKIPIF"}  # noqa: RUF012
+    IF_FIELDS = {"IF"}  # noqa: RUF012
+    FIELD_CLASSES = {"NEXT": NextField, "IF": IfField, "NEXTIF": NextIfField, "SKIPIF": SkipIfField}  # noqa: RUF012
 
     def __init__(self, options: MailMergeOptions):
         self._merge_field_map = {}  # merge_field.key: MergeField()
@@ -75,8 +75,7 @@ class MergeData:
             elif current_parent != parent:
                 current_parent = parent
                 texts.append("\n")
-            for text in elem.xpath("w:instrText/text()", namespaces=NAMESPACES):
-                texts.append(text)
+            texts.extend(elem.xpath("w:instrText/text()", namespaces=NAMESPACES))
 
             for obj_name in elem.xpath("@merge_key"):
                 if recursive:

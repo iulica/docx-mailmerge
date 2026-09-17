@@ -29,4 +29,4 @@ class UniqueIdsManager:
         new_obj_id = self.register_id(id_type, obj_id=int(obj_id))
         if new_obj_id is not None:
             # print(id_type, obj_id, new_obj_id, self.id_type_map[id_type])
-            return "%s%d" % (id_type, new_obj_id)
+            return f"{id_type}{new_obj_id}"

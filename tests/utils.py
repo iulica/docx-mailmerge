@@ -16,7 +16,7 @@ SIMPLE_FIELDS_TEXT_FIELDS_XPATH = "//w:fldSimple/w:r/w:t/text()"
 
 
 class EtreeMixin:
-    IGNORED_FIELDS = [
+    IGNORED_FIELDS = [  # noqa: RUF012
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rsidR",
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rsidRPr",
     ]
