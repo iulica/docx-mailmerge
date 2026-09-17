@@ -4,7 +4,7 @@ from copy import deepcopy
 from .constants import NAMESPACES
 
 
-class RelationsDocument(object):
+class RelationsDocument:
     """handling relations document"""
 
     def __init__(self, rel_part):

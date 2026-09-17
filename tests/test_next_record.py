@@ -1,7 +1,6 @@
 import unittest
 
 from mailmerge import NAMESPACES
-
 from tests.utils import EtreeMixin
 
 

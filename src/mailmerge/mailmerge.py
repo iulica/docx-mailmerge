@@ -1,6 +1,5 @@
 import os
 import warnings
-from typing import Optional
 
 # import locale
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -111,7 +110,7 @@ class MailMerge:
     def __init__(
         self,
         file,
-        options: Optional[MailMergeOptions] = None,
+        options: MailMergeOptions | None = None,
         remove_empty_tables=None,
         auto_update_fields_on_open=None,
         keep_fields=None,
@@ -187,7 +186,7 @@ class MailMerge:
     def __setattr__(self, name, value):
         if name in MailMergeOptions.__annotations__:
             warnings.warn(
-                "setting configuration values has been deprecated. Use .options.{} = <value>".format(name),
+                f"setting configuration values has been deprecated. Use .options.{name} = <value>",
                 category=DeprecationWarning,
                 stacklevel=2,
             )

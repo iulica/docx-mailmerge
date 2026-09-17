@@ -17,4 +17,4 @@ from .mergeoptions import MailMergeOptions as MailMergeOptions
 from .mergeoptions import OptionAutoUpdateFields as OptionAutoUpdateFields
 from .mergeoptions import OptionKeepFields as OptionKeepFields
 
-__all__ = ["__version__", "NAMESPACES", "MailMerge", "MailMergeOptions", "OptionAutoUpdateFields", "OptionKeepFields"]
+__all__ = ["NAMESPACES", "MailMerge", "MailMergeOptions", "OptionAutoUpdateFields", "OptionKeepFields", "__version__"]

@@ -8,7 +8,7 @@ from lxml import etree
 from .constants import MAKE_TESTS_HAPPY, NAMESPACES
 
 NUMBERFORMAT_RE = re.compile(r"([^0.,'#PN]+)?(P\d+|N\d+|[0.,'#]+%?)([^0.,'#%].*)?")
-DATEFORMAT_RE = "|".join([r"{}+".format(switch) for switch in "yYmMdDhHsS"] + [r"am/pm", r"AM/PM"])
+DATEFORMAT_RE = "|".join([rf"{switch}+" for switch in "yYmMdDhHsS"] + [r"am/pm", r"AM/PM"])
 DATEFORMAT_MAP = {
     "M": "{d.month}",
     "MM": "%m",
@@ -47,7 +47,7 @@ class SkipRecord(Exception):
     pass
 
 
-class BaseMergeField(object):
+class BaseMergeField:
     """
     Base MergeField class
 
@@ -177,17 +177,17 @@ class BaseMergeField(object):
         if value is None:
             value = 0
         if format_match is None:
-            warnings.warn("Non conforming number format <{}>".format(option))
+            warnings.warn(f"Non conforming number format <{option}>")
             return value
         format_prefix = format_match.group(1) or ""
         format_number = format_match.group(2)
         format_suffix = format_match.group(3) or ""
         if format_number[0] == "P":
-            return "{{}}{{:.{}%}}{{}}".format(int(format_number[1:])).format(format_prefix, value, format_suffix)
+            return f"{{}}{{:.{int(format_number[1:])}%}}{{}}".format(format_prefix, value, format_suffix)
         if format_number[0] == "N":
-            return "{{}}{{:.{}f}}{{}}".format(int(format_number[1:])).format(format_prefix, value, format_suffix)
+            return f"{{}}{{:.{int(format_number[1:])}f}}{{}}".format(format_prefix, value, format_suffix)
         if format_number[-1] == "%":
-            return "{}{:.0%}{}".format(format_prefix, value, format_suffix)
+            return f"{format_prefix}{value:.0%}{format_suffix}"
         thousand_info = [("_", thousand_char) for thousand_char in "'," if thousand_char in format_number] + [("", "")]
         thousand_flag, thousand_char = thousand_info[0]
         format_number = format_number.replace(",", "")
@@ -197,8 +197,8 @@ class BaseMergeField(object):
         len_decimals_plus_dot = 0 if not decimals else 1 + len(decimals)
         number_format_text = "{{}}{{:{zero_digits}{thousand_flag}{decimals}f}}{{}}".format(
             thousand_flag=thousand_flag,
-            zero_digits="0>{}".format(zero_digits + len_decimals_plus_dot) if zero_digits > 1 else "",
-            decimals=".{}".format(len(decimals)),
+            zero_digits=f"0>{zero_digits + len_decimals_plus_dot}" if zero_digits > 1 else "",
+            decimals=f".{len(decimals)}",
         )
         # print(self.name, "<", option, ">", number_format_text)
         try:
@@ -207,7 +207,7 @@ class BaseMergeField(object):
                 result = result.replace(thousand_flag, thousand_char)
             return result
         except Exception as e:
-            raise ValueError("Invalid number format <{}> with error <{}>".format(number_format_text, e))
+            raise ValueError(f"Invalid number format <{number_format_text}> with error <{e}>")
 
     def _format_date(self, value, flag, option):
         if value is None:
@@ -248,11 +248,11 @@ class BaseMergeField(object):
             self._fill_nested_elements(merge_data, row)
 
         self.filled_elements = []
-        value = row.get(self.name, "«{}»".format(self.name))
+        value = row.get(self.name, f"«{self.name}»")
         try:
             value = self._format(value)
-        except Exception as e:
-            warnings.warn("Invalid formatting for field <{}> with error <{}>".format(self.instr, e))
+        except Exception as e:  # noqa: BLE001
+            warnings.warn(f"Invalid formatting for field <{self.instr}> with error <{e}>")
             # raise
 
         self.filled_value = value
@@ -304,7 +304,9 @@ class BaseMergeField(object):
         all_elements = [deepcopy(elem) for elem in self._all_elements]  # copy of all elements
         if not self._show_elements:
             separate_element = deepcopy(self._all_elements[-1])
-            separate_element.find("w:fldChar", namespaces=NAMESPACES).set("{%(w)s}fldCharType" % NAMESPACES, "separate")
+            separate_element.find("w:fldChar", namespaces=NAMESPACES).set(
+                "{{{w}}}fldCharType".format(**NAMESPACES), "separate"
+            )
             all_elements[-1:-1] = [separate_element] + self.filled_elements
         else:
             index = self._all_elements.index(self._show_elements[0])
@@ -312,14 +314,14 @@ class BaseMergeField(object):
         return all_elements
 
     def _make_br(self):
-        return etree.Element("{%(w)s}cr" % NAMESPACES, attrib=None, nsmap=None)
+        return etree.Element("{{{w}}}cr".format(**NAMESPACES), attrib=None, nsmap=None)
 
     def _make_text(self, text):
         if self.nested:
-            text_node = etree.Element("{%(w)s}instrText" % NAMESPACES, attrib=None, nsmap=None)
-            text_node.set("{%(xml)s}space" % NAMESPACES, "preserve")
+            text_node = etree.Element("{{{w}}}instrText".format(**NAMESPACES), attrib=None, nsmap=None)
+            text_node.set("{{{xml}}}space".format(**NAMESPACES), "preserve")
         else:
-            text_node = etree.Element("{%(w)s}t" % NAMESPACES, attrib=None, nsmap=None)
+            text_node = etree.Element("{{{w}}}t".format(**NAMESPACES), attrib=None, nsmap=None)
 
         text_node.text = text
         return text_node

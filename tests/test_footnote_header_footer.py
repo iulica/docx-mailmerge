@@ -1,7 +1,6 @@
 import unittest
 
 from mailmerge import NAMESPACES
-
 from tests.utils import TEXTS_XPATH, EtreeMixin, get_document_body_part, get_document_body_parts
 
 FOOTNOTE_XPATH = "//w:footnote[@w:id = '1']/w:p/w:r/w:t/text()"

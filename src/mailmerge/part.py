@@ -23,15 +23,15 @@ class Part:
         self.__fill_complex_fields()
 
     def __fill_simple_fields(self):
-        for fld_simple_elem in self.part.findall(".//{%(w)s}fldSimple" % NAMESPACES):
-            first_run_elem = deepcopy(fld_simple_elem.find("{%(w)s}r" % NAMESPACES))
+        for fld_simple_elem in self.part.findall(".//{{{w}}}fldSimple".format(**NAMESPACES)):
+            first_run_elem = deepcopy(fld_simple_elem.find("{{{w}}}r".format(**NAMESPACES)))
             if first_run_elem is None:
                 continue
             if MAKE_TESTS_HAPPY:
                 first_run_elem.clear()
             merge_field_obj = self.merge_data.make_data_field(
                 fld_simple_elem.getparent(),
-                instr=fld_simple_elem.get("{%(w)s}instr" % NAMESPACES),
+                instr=fld_simple_elem.get("{{{w}}}instr".format(**NAMESPACES)),
                 field_class=SimpleMergeField,
                 all_elements=[fld_simple_elem],
                 instr_elements=[first_run_elem],
@@ -81,7 +81,7 @@ class Part:
         # print('>>>>>>>')
         while field_char_type != "end":
             # find next sibling
-            next_element, field_char_subelem, field_char_type = self.__get_next_element(current_element)
+            next_element, _field_char_subelem, field_char_type = self.__get_next_element(current_element)
 
             if next_element is None:
                 instr_text = self.merge_data.get_instr_text(instr_elements, recursive=True)
@@ -121,7 +121,7 @@ class Part:
         Elements in the tree"""
         # will find all "runs" containing an element of fldChar type=begin
         elements_of_type_begin = list(
-            self.part.findall('.//{%(w)s}r/{%(w)s}fldChar[@{%(w)s}fldCharType="begin"]/..' % NAMESPACES)
+            self.part.findall('.//{{{w}}}r/{{{w}}}fldChar[@{{{w}}}fldCharType="begin"]/..'.format(**NAMESPACES))
         )
         while elements_of_type_begin:
             merge_field_obj, _ = self._pull_next_merge_field(elements_of_type_begin)
@@ -140,7 +140,7 @@ class NewPart:
         self.relations = relations
 
 
-class MergeHeaderFooterDocument(object):
+class MergeHeaderFooterDocument:
     """prepare and merge one Header/Footer document for merge_templates
 
     helper class to handle the actual merging of one header/footer document
@@ -203,7 +203,7 @@ class MergeHeaderFooterDocument(object):
         return []
 
 
-class MergeDocument(object):
+class MergeDocument:
     """prepare and merge one document
 
     helper class to handle the actual merging of one document
@@ -244,15 +244,17 @@ class MergeDocument(object):
 
             type_element = first_section.find("w:type", namespaces=NAMESPACES)
 
-            if MAKE_TESTS_HAPPY:
+            if MAKE_TESTS_HAPPY:  # noqa: SIM102
                 if type_element is not None:
                     first_section.remove(type_element)
                     type_element = None
 
             if type_element is None:
-                type_element = etree.SubElement(first_section, "{%(w)s}type" % NAMESPACES, attrib=None, nsmap=None)
+                type_element = etree.SubElement(
+                    first_section, "{{{w}}}type".format(**NAMESPACES), attrib=None, nsmap=None
+                )
 
-            type_element.set("{%(w)s}val" % NAMESPACES, sep_type)
+            type_element.set("{{{w}}}val".format(**NAMESPACES), sep_type)
 
         # FINDING LAST SECTION OF THE DOCUMENT
         self._last_section = self.root.find("w:body/w:sectPr", namespaces=NAMESPACES)
@@ -266,15 +268,15 @@ class MergeDocument(object):
         # EMPTY THE BODY - PREPARE TO FILL IT WITH DATA
         self._body.clear()
 
-        self._separator = etree.Element("{%(w)s}p" % NAMESPACES, attrib=None, nsmap=None)
+        self._separator = etree.Element("{{{w}}}p".format(**NAMESPACES), attrib=None, nsmap=None)
 
         if sep_class == "section":
-            pPr = etree.SubElement(self._separator, "{%(w)s}pPr" % NAMESPACES, attrib=None, nsmap=None)
+            pPr = etree.SubElement(self._separator, "{{{w}}}pPr".format(**NAMESPACES), attrib=None, nsmap=None)
             pPr.append(deepcopy(self._last_section))
         elif sep_class == "break":
-            r = etree.SubElement(self._separator, "{%(w)s}r" % NAMESPACES, attrib=None, nsmap=None)
-            nbreak = etree.SubElement(r, "{%(w)s}br" % NAMESPACES, attrib=None, nsmap=None)
-            nbreak.set("{%(w)s}type" % NAMESPACES, sep_type)
+            r = etree.SubElement(self._separator, "{{{w}}}r".format(**NAMESPACES), attrib=None, nsmap=None)
+            nbreak = etree.SubElement(r, "{{{w}}}br".format(**NAMESPACES), attrib=None, nsmap=None)
+            nbreak.set("{{{w}}}type".format(**NAMESPACES), sep_type)
 
     def prepare(self, merge_data, first=False):
         """prepares the current body for the merge"""
@@ -305,8 +307,8 @@ class MergeDocument(object):
         old_relation = self.relations.get_relation_elem(old_target)
         new_rel_id = self.relations.replace_relation(merge_data, old_relation, new_target)
 
-        for elem in sep.xpath('//*[@r:id="%s"]' % old_relation.attrib["Id"], namespaces=NAMESPACES):
-            elem.attrib["{%(r)s}id" % NAMESPACES] = new_rel_id
+        for elem in sep.xpath('//*[@r:id="{}"]'.format(old_relation.attrib["Id"]), namespaces=NAMESPACES):
+            elem.attrib["{{{r}}}id".format(**NAMESPACES)] = new_rel_id
 
     def finish(self, finish_rels, abort=False):
         """finishes the current body by saving it into the main body or into a file (future feature)"""

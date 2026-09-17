@@ -21,7 +21,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
             rows = [{"fieldname": value} for value, _ in value_list]
             # print(formatting)
 
-            instr = 'MERGEFIELD fieldname {} "{}"'.format(flag, formatting)
+            instr = f'MERGEFIELD fieldname {flag} "{formatting}"'
             self.simple_merge_field.set("{%(w)s}instr" % NAMESPACES, instr)
             with MailMerge(self.get_new_docx(self.replacement_parts)) as document:
                 self.assertEqual(document.get_merge_fields(), {"fieldname"})
@@ -34,7 +34,7 @@ class FormattingTest(EtreeMixin, unittest.TestCase):
             self.assertEqual(
                 output_fields,
                 [output_value for _, output_value in value_list],
-                "Format <{} {}>".format(flag, formatting),
+                f"Format <{flag} {formatting}>",
             )
 
     def test_number(self):

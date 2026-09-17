@@ -3,7 +3,7 @@ import re
 IDSTR_RE = re.compile(r"([A-Za-z_]+)(\d+)")
 
 
-class UniqueIdsManager(object):
+class UniqueIdsManager:
     """handles different counters for various ids in the document"""
 
     def __init__(self):

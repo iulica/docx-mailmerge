@@ -9,7 +9,7 @@ from .mergeoptions import MailMergeOptions, OptionKeepFields
 from .unique_man import UniqueIdsManager
 
 
-class MergeData(object):
+class MergeData:
     """prepare the MergeField objects and the data"""
 
     SUPPORTED_FIELDS = {"MERGEFIELD", "NEXT", "NEXTIF", "SKIPIF"}
@@ -82,7 +82,7 @@ class MergeData(object):
                 if recursive:
                     texts.append(self.get_field_obj(obj_name).instr)
                 else:
-                    texts.append("{{{}}}".format(obj_name))
+                    texts.append(f"{{{obj_name}}}")
 
         return "".join(texts)
 
@@ -129,8 +129,8 @@ class MergeData(object):
         try:
             tokens = list(self._get_instr_tokens(instr))
         except ValueError as e:
-            tokens = [field_type] + list(map(lambda part: part.replace('"', ""), rest))
-            warnings.warn("Invalid field description <{}> near: <{}>".format(str(e), instr))
+            tokens = [field_type] + [part.replace('"', "") for part in rest]
+            warnings.warn(f"Invalid field description <{e!s}> near: <{instr}>")
 
         # print("make data object", field_class, instr, len(elements), len(kwargs.get('ignore_elements', [])))
         field_obj = field_class(
@@ -160,7 +160,7 @@ class MergeData(object):
         self.get_field_obj(key).nested = nested
 
     def _get_next_key(self):
-        key = "field_{}".format(self._merge_field_next_id)
+        key = f"field_{self._merge_field_next_id}"
         self._merge_field_next_id += 1
         return key
 
@@ -215,7 +215,7 @@ class MergeData(object):
                         try:
                             del table[idx + i]
                         except IndexError:
-                            raise IndexError("Table row {} does not fit into table at index: {}".format(row_data, i))
+                            raise IndexError(f"Table row {row_data} does not fit into table at index: {i}")
                     row = deepcopy(template)
                     self.replace(row, row_data)
                     table.insert(idx + i, row)
@@ -226,12 +226,12 @@ class MergeData(object):
                     parent = table.getparent()
                     parent.remove(table)
 
-    def __find_row_anchor(self, body, field):
-        for field in body.findall('.//MergeField[@name="%s"]' % field):
-            current_elem = field.getparent()
+    def __find_row_anchor(self, body, field_name):
+        for field_elem in body.findall(f'.//MergeField[@name="{field_name}"]'):
+            current_elem = field_elem.getparent()
             while current_elem is not None:
-                if current_elem.tag == "{%(w)s}tbl" % NAMESPACES:
-                    yield self.__find_row(current_elem, field)
+                if current_elem.tag == "{{{w}}}tbl".format(**NAMESPACES):
+                    yield self.__find_row(current_elem, field_elem)
                     break
                 current_elem = current_elem.getparent()
 
@@ -260,5 +260,5 @@ class MergeData(object):
     def fix_ids(self, current_body):
         """will fix all ids in the current body"""
         for tag, attr_gen in TAGS_WITH_ID.items():
-            for elem in current_body.xpath("//{}".format(tag), namespaces=NAMESPACES):
+            for elem in current_body.xpath(f"//{tag}", namespaces=NAMESPACES):
                 self.fix_id(elem, attr_gen)

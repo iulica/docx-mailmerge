@@ -15,7 +15,7 @@ SEPARATE_TEXT_FIELDS_XPATH = '//w:fldChar[@w:fldCharType = "separate"]/../follow
 SIMPLE_FIELDS_TEXT_FIELDS_XPATH = "//w:fldSimple/w:r/w:t/text()"
 
 
-class EtreeMixin(object):
+class EtreeMixin:
     IGNORED_FIELDS = [
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rsidR",
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rsidRPr",
