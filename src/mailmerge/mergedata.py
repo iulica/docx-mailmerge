@@ -121,7 +121,8 @@ class MergeData:
 
         instr = instr or self.get_instr_text(instr_elements)
         tokens = self._get_field_tokens(instr)
-        field_type = tokens[0] if tokens else ""
+        # field keywords are case-insensitive in Word, field names are not
+        field_type = tokens[0].upper() if tokens else ""
         if field_type not in self.supported_fields:
             # ignore the field
             # print("ignore field", instr)
